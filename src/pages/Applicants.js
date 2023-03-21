@@ -4,8 +4,6 @@ import React, { useState } from "react";
 const Applicants = () => {
   const [data, setData] = useState({
     email: "",
-    first_name: "",
-    last_name: "",
   });
   const [fileData, setFileData] = useState(null);
 
@@ -28,7 +26,7 @@ const Applicants = () => {
     console.log(data);
     axios
       .post(
-        `http://localhost:8080/api/register?user=${encodeURIComponent(
+        `http://localhost:8080/api/scan?profile=${encodeURIComponent(
           JSON.stringify(data)
         )}`,
         fileData
@@ -48,24 +46,6 @@ const Applicants = () => {
           type="email"
           name="email"
           value={data.email}
-          onChange={handleChange}
-        />
-        <br></br>
-        <label>First Name</label>
-
-        <input
-          type="text"
-          name="first_name"
-          value={data.first_name}
-          onChange={handleChange}
-        />
-        <br></br>
-        <label>Last Name</label>
-
-        <input
-          type="text"
-          name="last_name"
-          value={data.last_name}
           onChange={handleChange}
         />
         <br></br>
