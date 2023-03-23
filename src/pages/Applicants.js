@@ -38,6 +38,22 @@ const Applicants = () => {
         console.log(error);
       });
   };
+
+  const rescan = (mode) => {
+    console.log(data, "the data");
+    axios
+      .post(
+        `http://localhost:8080/api/rescan?profile=${encodeURIComponent(
+          JSON.stringify(data)
+        )}&mode=${mode}`
+      )
+      .then((res) => {
+        console.log(res, "the result");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
   return (
     <div className="App">
       <form onSubmit={handleSubmit}>
@@ -56,6 +72,9 @@ const Applicants = () => {
         <input type="submit" value="Submit" />
         <br></br>
       </form>
+
+      <button onClick={() => rescan("advance")}>Advance scan</button>
+      <button onClick={() => rescan("partialscan")}>partialscan scan</button>
     </div>
   );
 };
