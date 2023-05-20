@@ -28,7 +28,7 @@ const Admin = () => {
     getKeyWords();
   }, []);
   return (
-    <div>
+    <div className="admin">
       <form onSubmit={handleSubmit}>
         <input
           type="text"
@@ -50,6 +50,7 @@ const Admin = () => {
           {words &&
             words.map((w, i) => (
               <tr key={i}>
+                <td>{w.id}</td>
                 <td>{w.keyWords}</td>
               </tr>
             ))}
