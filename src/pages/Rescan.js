@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { env } from "./env";
+import { env } from "../env";
 
 const Rescan = () => {
   const [data, setData] = useState("");

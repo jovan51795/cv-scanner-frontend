@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useState } from "react";
-import { env } from "./env";
+import { env } from "../env";
 
 const Applicants = () => {
   const [data, setData] = useState({

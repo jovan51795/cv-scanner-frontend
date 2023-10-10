@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
-import { env } from "./env";
+import { env } from "../env";
 
 const Admin = () => {
   const [keyWord, setKeyWord] = useState("");
