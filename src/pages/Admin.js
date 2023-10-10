@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
+import { env } from "./env";
 
 const Admin = () => {
   const [keyWord, setKeyWord] = useState("");
@@ -7,9 +8,11 @@ const Admin = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
+    const data = {
+      keyword: keyWord,
+    };
     axios
-      .post("http://localhost:8080/api/addkeyword", { keyWords: keyWord })
+      .post(`${env.baseURL}/api/v1/scanner/add-keyword`, data)
       .then((res) => {
         if (res.data) {
           getKeyWords();
@@ -18,7 +21,7 @@ const Admin = () => {
   };
 
   const getKeyWords = () => {
-    axios.get("http://localhost:8080/api/getkeywords").then((res) => {
+    axios.get(`${env.baseURL}/api/v1/scanner/get-keywords`).then((res) => {
       console.log(res.data);
       setWords(res.data);
     });
@@ -51,7 +54,7 @@ const Admin = () => {
             words.map((w, i) => (
               <tr key={i}>
                 <td>{w.id}</td>
-                <td>{w.keyWords}</td>
+                <td>{w.keyword}</td>
               </tr>
             ))}
         </tbody>

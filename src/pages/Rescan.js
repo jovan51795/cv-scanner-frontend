@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { env } from "./env";
 
 const Rescan = () => {
   const [data, setData] = useState("");
@@ -7,7 +8,7 @@ const Rescan = () => {
     e.preventDefault();
     axios
       .post(
-        `http://localhost:8080/api/rescan?profile=${encodeURIComponent(
+        `${env.baseURL}/api2/v1/scanner/rescan?profile=${encodeURIComponent(
           JSON.stringify({ email: data })
         )}&mode=${mode}`
       )

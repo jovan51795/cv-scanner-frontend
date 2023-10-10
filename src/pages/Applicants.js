@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useState } from "react";
+import { env } from "./env";
 
 const Applicants = () => {
   const [data, setData] = useState({
@@ -12,6 +13,7 @@ const Applicants = () => {
     var fileData1 = new FormData();
     fileData1.append("file", file);
     setFileData(fileData1);
+    console.log(e, "the e");
   };
 
   const handleChange = (e) => {
@@ -21,16 +23,30 @@ const Applicants = () => {
     });
   };
 
+  //http://localhost:8222/api2/v1/scanner/tags
+  //http://localhost:8222/api/get-tags
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(data);
     axios
       .post(
-        `http://localhost:8080/api/scan?profile=${encodeURIComponent(
+        `${env.baseURL}/api/v1/scanner/scan?profile=${encodeURIComponent(
           JSON.stringify(data)
         )}`,
         fileData
       )
+      .then((res) => {
+        console.log(res, "the result");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const handleSubmit2 = (e) => {
+    e.preventDefault();
+    axios
+      .post(`${env.baseURL}/api2/v1/scanner/get-tags/`, fileData)
       .then((res) => {
         console.log(res, "the result");
       })
@@ -57,6 +73,8 @@ const Applicants = () => {
         <input type="submit" value="Submit" />
         <br></br>
       </form>
+
+      <button onClick={handleSubmit2}>Get Tags</button>
     </div>
   );
 };
