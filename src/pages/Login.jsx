@@ -1,10 +1,32 @@
 import React, { useState } from "react";
+import { login, getToken } from "../services/keycloak";
 
 const Login = () => {
-  const [login, setLogin] = useState({ username: "", password: "" });
+  const [password, setPassword] = useState("");
+  const [username, setUsername] = useState("");
 
   const submit = (e) => {
+    const data = new URLSearchParams();
+    data.append("grant_type", "password");
+    data.append("client_id", "cv_scanner");
+    // data.append("username", "cv_scanner_user");
+    // data.append("password", "77-keycloak-pass-dev");
+    data.append("username", username);
+    data.append("password", password);
     e.preventDefault();
+    if (username || password) {
+      login(data)
+        .then((res) => {
+          if (res.data) {
+            sessionStorage.setItem("cv_tagging", JSON.stringify(res.data));
+          }
+        })
+        .catch((error) => {
+          alert("Unknown error occured");
+        });
+    } else {
+      alert("Please fill the required fields!");
+    }
   };
   return (
     <div className="form-container" onSubmit={submit}>
@@ -13,51 +35,21 @@ const Login = () => {
         <div className="input-container">
           <div className="group-wrapper">
             <div className="group">
-              <svg
-                stroke="currentColor"
-                strokeWidth="1.5"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-                className="icon"
-              >
-                <path
-                  d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z"
-                  strokeLinejoin="round"
-                  strokeLinecap="round"
-                ></path>
-              </svg>
               <input
                 required
                 className="input"
                 type="text"
                 placeholder="Username"
-                onChange={(e) =>
-                  setLogin({ email: e.target.value, password: login.password })
-                }
+                onChange={(e) => setUsername(e.target.value)}
               />
             </div>
             <div className="group">
-              <svg
-                stroke="currentColor"
-                strokeWidth="1.5"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-                className="icon"
-              >
-                <path
-                  d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z"
-                  strokeLinejoin="round"
-                  strokeLinecap="round"
-                ></path>
-              </svg>
               <input
                 required
                 className="input"
                 type="password"
-                placeholder="password"
-                onChange={(e) =>
-                  setLogin({ password: e.target.value, email: login.email })
-                }
+                placeholder="Password"
+                onChange={(e) => setPassword(e.target.value)}
               />
             </div>
             <div className="group">
