@@ -1,7 +1,7 @@
-import http from "./http";
+import { keyCloakHttp } from "./http";
 
 export const login = (cred) => {
-  return http.post("/token", cred);
+  return keyCloakHttp.post("/token", cred);
 };
 
 export const getToken = () => {

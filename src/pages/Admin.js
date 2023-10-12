@@ -1,10 +1,15 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { env } from "../env";
+import { getToken } from "../services/keycloak";
+import { http } from "../services/http";
+import { getAllKeywords } from "../services/cv_tagging";
 
 const Admin = () => {
   const [keyWord, setKeyWord] = useState("");
   const [words, setWords] = useState(null);
+
+  const token = getToken();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -12,7 +17,7 @@ const Admin = () => {
       keyword: keyWord,
     };
     axios
-      .post(`${env.baseURL}/api/v1/scanner/add-keyword`, data)
+      .post(`${env.baseURL}/api/v2/scanner/add-keyword`, data)
       .then((res) => {
         if (res.data) {
           getKeyWords();
@@ -20,8 +25,8 @@ const Admin = () => {
       });
   };
 
-  const getKeyWords = () => {
-    axios.get(`${env.baseURL}/api/v1/scanner/get-keywords`).then((res) => {
+  const getKeyWords = async () => {
+    getAllKeywords().then((res) => {
       console.log(res.data);
       setWords(res.data);
     });
