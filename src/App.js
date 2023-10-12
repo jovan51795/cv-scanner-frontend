@@ -1,8 +1,5 @@
 import "./App.css";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import Admin from "./pages/Admin";
-import Applicants from "./pages/Applicants";
-import Rescan from "./pages/Rescan";
 import Login from "./pages/Login";
 import { getToken } from "./services/keycloak";
 import PrivateRoute from "./pages/PrivateRoute";
