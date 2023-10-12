@@ -9,9 +9,6 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        {/* <Route path="/" exact={true} element={<Applicants />} />
-        <Route path="/admin" element={<Admin />} />
-        <Route path="/rescan" element={<Rescan />} /> */}
         <Route
           path="*"
           element={
