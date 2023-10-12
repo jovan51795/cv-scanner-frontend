@@ -25,7 +25,11 @@ const Login = () => {
           }
         })
         .catch((error) => {
-          alert("Unknown error occured");
+          if (error && error.response.status === 401) {
+            alert("Invalid username or password");
+          } else {
+            alert("Unknown error occured");
+          }
         });
     } else {
       alert("Please fill the required fields!");
