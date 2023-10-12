@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import { login, getToken } from "../services/keycloak";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
+  const navigate = useNavigate();
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
 
@@ -19,6 +21,7 @@ const Login = () => {
         .then((res) => {
           if (res.data) {
             sessionStorage.setItem("cv_tagging", JSON.stringify(res.data));
+            navigate("/admin");
           }
         })
         .catch((error) => {

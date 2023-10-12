@@ -28,8 +28,10 @@ http.interceptors.response.use(null, (error) => {
     error.response.status < 500;
 
   if (!expectedError) {
-    console.error(error);
-    // alert("An unexpected error occurred");
+    alert("An unexpected error occurred");
+  }
+  if (error && error.response.status === 401) {
+    window.location.href = "/login";
   }
   return Promise.reject(error);
 });
