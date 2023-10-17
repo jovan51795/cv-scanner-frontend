@@ -67,3 +67,19 @@
           
     }
 }
+
+@media (max-width: 768px) {
+  .form-container {
+    width: unset !important;
+    margin: 2rem;
+  }
+  .form {
+    width: 100% !important;
+  }
+ }
+
+ @media (max-width: 1023px) {
+    .form {
+      width: 80% !important;
+    }
+   }

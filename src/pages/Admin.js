@@ -1,7 +1,5 @@
-import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { env } from "../env";
-import { getToken } from "../services/keycloak";
 import { getAllKeywords } from "../services/cv_tagging";
 import { http } from "../services/http";
 

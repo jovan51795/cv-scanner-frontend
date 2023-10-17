@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { login, getToken } from "../services/keycloak";
+import { login } from "../services/keycloak";
 import { useNavigate } from "react-router-dom";
 
 const Login = () => {
