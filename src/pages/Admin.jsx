@@ -2,11 +2,14 @@ import React, { useState, useEffect } from "react";
 import { env } from "../env";
 import { getAllKeywords } from "../services/cv_tagging";
 import { http } from "../services/http";
-import { Button, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField } from "@mui/material";
+import { Button, TextField, Card, CardContent } from "@mui/material";
+import { DataGrid } from "@mui/x-data-grid";
 
 const Admin = () => {
   const [keyWord, setKeyWord] = useState("");
-  const [words, setWords] = useState(null);
+  const [words, setWords] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [showNoData, setShowNoData] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -24,44 +27,60 @@ const Admin = () => {
     getAllKeywords().then((res) => {
       console.log(res.data);
       setWords(res.data);
+      setLoading(false);
     });
   };
 
   useEffect(() => {
     getKeyWords();
+    setTimeout(() => {
+      if (words.length === 0) {
+        setShowNoData(true);
+      }
+    }, 10000); // 10 seconds
   }, []);
+
+  const columns = [
+    {
+      field: "id",
+      headerName: "Keyword ID",
+      width: 150,
+      headerAlign: "center",
+    },
+    {
+      field: "keyword",
+      headerName: "Keyword",
+      width: 400,
+      headerAlign: "center",
+    },
+  ];
+
   return (
     <div className="admin">
-      <form onSubmit={handleSubmit}>
-      <TextField name="keyWords" size="small"
-          placeholder="create new key word" onChange={(e) => setKeyWord(e.target.value)}/>
-      <Button type="submit" variant="contained">
-        Send
-      </Button></form>
-<div>
-<TableContainer component={Paper} color="">
-      <Table size="small" >
-        <TableHead>
-          <TableRow>
-            <TableCell align="center" style={{ width: '30%', fontWeight: 'bold' }}>Keyword ID</TableCell>
-            <TableCell align="center" style={{ width: '70%', fontWeight: 'bold' }}>Keyword</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-        {words &&
-            words.map((w, i) => (
-            <TableRow
-              key={i}
-            >
-              <TableCell align="center" >{w.id}</TableCell>
-              <TableCell >{w.keyword}</TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-</TableContainer>
+      <form onSubmit={handleSubmit} style={{ marginBottom: "20px" }}>
+        <TextField
+          name="keyWords"
+          size="small"
+          placeholder="Create a new keyword"
+          value={keyWord}
+          onChange={(e) => setKeyWord(e.target.value)}
+        />
+        <Button type="submit" variant="contained">
+          Send
+        </Button>
+      </form>
+      <div style={{ marginTop: "20px" }}>
+        {loading ? (
+          <img src="https://i.gifer.com/YCZH.gif" alt="Loading" />
+        ) : words.length === 0 ? (
+          showNoData ? (
+            "No Data"
+          ) : null
+        ) : (
+          <DataGrid rows={words} columns={columns} pageSize={5} />
+        )}
+      </div>
     </div>
-</div>
   );
 };
 

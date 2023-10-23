@@ -36,7 +36,11 @@ const Login = () => {
     }
   };
   return (
-    <div className="form-container" onSubmit={submit}>
+    <div
+      className="form-container"
+      onSubmit={submit}
+      style={{ backgroundColor: "#222222" }}
+    >
       <form className="form">
         <div className="logo-container">LOGIN</div>
         <div className="input-container">
