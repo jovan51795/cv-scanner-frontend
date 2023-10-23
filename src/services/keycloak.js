@@ -4,6 +4,10 @@ export const login = async (cred) => {
   return await keyCloakHttp.post("/token", cred);
 };
 
+export const logout = () => {
+  sessionStorage.removeItem("cv_tagging");
+};
+
 export const getToken = () => {
   const token = sessionStorage.getItem("cv_tagging");
   if (token) {
