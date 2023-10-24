@@ -11,6 +11,9 @@ import {
   Delete,
   Edit,
 } from "@mui/icons-material";
+import Navbar from "../components/Navbar";
+import LoadingCircle from "../components/LoadingCircle";
+import { Box, Container, Stack } from "@mui/system";
 
 const Admin = () => {
   const [keyWord, setKeyWord] = useState("");
@@ -202,7 +205,7 @@ const Admin = () => {
         }}
       >
         {loading ? (
-          <LoadingCircle/>
+          <LoadingCircle />
         ) : words.length === 0 ? (
           showNoData ? (
             "No Data"
