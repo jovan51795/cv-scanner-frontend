@@ -1,8 +1,16 @@
+import { Chip } from "@mui/material";
 import React from "react";
 
 const KeywordStatus = (param) => {
-  console.log(param);
-  return <div>KeywordStatus</div>;
+  return (
+    <>
+      <Chip
+        variant="outlined"
+        label={param.row.status}
+        color={param.row.status === "active" ? "success" : "warning"}
+      />
+    </>
+  );
 };
 
 export default KeywordStatus;

@@ -5,13 +5,7 @@ import { http } from "../services/http";
 import TableActions from "../components/TableActions.jsx";
 import { Box, Button, Container, Stack, TextField } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
-import Swal from "sweetalert2";
-import {
-  KeyboardArrowLeft,
-  KeyboardArrowRight,
-  Delete,
-  Edit,
-} from "@mui/icons-material";
+import { KeyboardArrowLeft, KeyboardArrowRight } from "@mui/icons-material";
 import Navbar from "../components/Navbar";
 import LoadingCircle from "../components/LoadingCircle";
 import KeywordStatus from "../components/KeywordStatus";
@@ -38,7 +32,6 @@ const Admin = () => {
 
   const getKeyWords = async () => {
     getAllKeywords(page, pageSize).then((res) => {
-      console.log(res.data);
       setWords(res.data);
       setLoading(false);
     });
@@ -54,7 +47,6 @@ const Admin = () => {
   }, [page, pageSize]);
   const increasePage = () => {
     setPage((prevPage) => prevPage + 1);
-    console.log(page);
     getKeyWords();
   };
 
