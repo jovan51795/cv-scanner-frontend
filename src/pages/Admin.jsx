@@ -2,18 +2,13 @@ import React, { useState, useEffect } from "react";
 import { env } from "../env";
 import { getAllKeywords } from "../services/cv_tagging";
 import { http } from "../services/http";
-import { Button, TextField } from "@mui/material";
+import TableActions from "../components/TableActions.jsx";
+import { Box, Button, Container, Stack, TextField } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
-import Swal from "sweetalert2";
-import {
-  KeyboardArrowLeft,
-  KeyboardArrowRight,
-  Delete,
-  Edit,
-} from "@mui/icons-material";
+import { KeyboardArrowLeft, KeyboardArrowRight } from "@mui/icons-material";
 import Navbar from "../components/Navbar";
 import LoadingCircle from "../components/LoadingCircle";
-import { Box, Container, Stack } from "@mui/system";
+import KeywordStatus from "../components/KeywordStatus";
 
 const Admin = () => {
   const [keyWord, setKeyWord] = useState("");
@@ -37,7 +32,6 @@ const Admin = () => {
 
   const getKeyWords = async () => {
     getAllKeywords(page, pageSize).then((res) => {
-      console.log(res.data);
       setWords(res.data);
       setLoading(false);
     });
@@ -53,7 +47,6 @@ const Admin = () => {
   }, [page, pageSize]);
   const increasePage = () => {
     setPage((prevPage) => prevPage + 1);
-    console.log(page);
     getKeyWords();
   };
 
@@ -76,92 +69,37 @@ const Admin = () => {
     {
       field: "id",
       headerName: "Keyword ID",
-      width: 200,
       headerAlign: "center",
       align: "center",
+      flex: 1,
     },
     {
       field: "keyword",
       headerName: "Keyword",
-      width: 300,
+      flex: 1,
+      align: "center",
       headerAlign: "center",
     },
     {
-      field: "action",
-      headerName: "Actions",
-      width: 200,
+      field: "status",
+      headerName: "Status",
       headerAlign: "center",
-      renderCell: (params) => {
-        const handleEditClick = () => {
-          Swal.fire({
-            title: "Edit Keyword",
-            html: `
-              <input type="text" id="editInput" class="swal2-input" placeholder="Keyword">
-            `,
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "primary",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "Yes, edit it!",
-          }).then((result) => {
-            const inputText = document.getElementById("editInput").value;
+      align: "center",
+      width: 400,
+      flex: 1,
+      renderCell: KeywordStatus,
+    },
+    {
+      field: "action",
+      sortable: false,
+      headerName: "Actions",
+      headerClassName: "header-cell",
+      cellClassName: "action-cell",
+      flex: 1,
 
-            if (result.isConfirmed) {
-              http
-                .patch(
-                  `${env.baseURL}/api/v2/scanner/keywords?id=${params.row.id}&keyword=${inputText}`
-                )
-                .then((res) => {
-                  console.log(res.data.message);
-                  window.location.reload();
-                });
-            }
-          });
-        };
-
-        const handleDeleteClick = () => {
-          Swal.fire({
-            title: "Delete Keyword?",
-            text: "Are you sure you want to delete this keyword?",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#d33",
-            cancelButtonColor: "#3085d6",
-            confirmButtonText: "Yes, delete it!",
-          }).then((result) => {
-            if (result.isConfirmed) {
-              http
-                .delete(
-                  `${env.baseURL}/api/v2/scanner/keywords?id=${params.row.id}`
-                )
-                .then((res) => {
-                  window.location.reload();
-                });
-            }
-          });
-        };
-
-        return (
-          <div>
-            <Button
-              color="warning"
-              variant="outlined"
-              style={{ marginRight: "10px" }}
-              onClick={handleEditClick}
-            >
-              <Edit />
-            </Button>
-            <Button
-              color="error"
-              variant="outlined"
-              style={{ marginRight: "10px" }}
-              onClick={handleDeleteClick}
-            >
-              <Delete />
-            </Button>
-          </div>
-        );
-      },
+      headerAlign: "center",
+      align: "center",
+      renderCell: TableActions,
     },
   ];
 
@@ -212,7 +150,13 @@ const Admin = () => {
           ) : null
         ) : (
           <>
-            <DataGrid rows={words} columns={columns} pageSize={5} hideFooter />
+            <DataGrid
+              rows={words}
+              columns={columns}
+              pageSize={5}
+              hideFooter
+              disableExtendRowFullWidth
+            />
             <div
               style={{
                 marginTop: "20px",

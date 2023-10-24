@@ -15,12 +15,15 @@ const Navbar = () => {
   };
 
   return (
-    <AppBar position="static">
+    <AppBar position="sticky">
       <Toolbar>
         <Typography variant="h6" sx={{ flexGrow: 1, fontWeight: "bold" }}>
           CV TAGGING
         </Typography>
-        <Button onClick={handleSignOut}> LOGOUT</Button>
+        <Button onClick={handleSignOut} size="medium">
+          {" "}
+          LOGOUT
+        </Button>
       </Toolbar>
     </AppBar>
   );

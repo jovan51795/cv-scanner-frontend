@@ -21,8 +21,8 @@ const Login = () => {
         .then((res) => {
           if (res.data) {
             sessionStorage.setItem("cv_tagging", JSON.stringify(res.data));
-            navigate("/admin");
           }
+          navigate("/admin");
         })
         .catch((error) => {
           if (error && error.response.status === 401) {
