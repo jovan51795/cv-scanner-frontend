@@ -5,7 +5,13 @@ import { http } from "../services/http";
 import TableActions from "../components/TableActions.jsx";
 import { Box, Button, Container, Stack, TextField } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
-import { KeyboardArrowLeft, KeyboardArrowRight } from "@mui/icons-material";
+import Swal from "sweetalert2";
+import {
+  KeyboardArrowLeft,
+  KeyboardArrowRight,
+  Delete,
+  Edit,
+} from "@mui/icons-material";
 import Navbar from "../components/Navbar";
 import LoadingCircle from "../components/LoadingCircle";
 import KeywordStatus from "../components/KeywordStatus";
