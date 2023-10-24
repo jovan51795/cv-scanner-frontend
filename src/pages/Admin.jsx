@@ -8,6 +8,7 @@ import { DataGrid } from "@mui/x-data-grid";
 import { KeyboardArrowLeft, KeyboardArrowRight } from "@mui/icons-material";
 import Navbar from "../components/Navbar";
 import LoadingCircle from "../components/LoadingCircle";
+import KeywordStatus from "../components/KeywordStatus";
 
 const Admin = () => {
   const [keyWord, setKeyWord] = useState("");
@@ -82,6 +83,14 @@ const Admin = () => {
       headerAlign: "center",
     },
     {
+      field: "status",
+      headerName: "Status",
+      headerAlign: "center",
+      align: "center",
+      flex: 1,
+      renderCell: KeywordStatus,
+    },
+    {
       field: "action",
       sortable: false,
       headerName: "Actions",
@@ -139,7 +148,13 @@ const Admin = () => {
           ) : null
         ) : (
           <>
-            <DataGrid rows={words} columns={columns} pageSize={5} hideFooter disableExtendRowFullWidth/>
+            <DataGrid
+              rows={words}
+              columns={columns}
+              pageSize={5}
+              hideFooter
+              disableExtendRowFullWidth
+            />
             <div
               style={{
                 marginTop: "20px",
