@@ -20,3 +20,11 @@ export const deleteKeyword = async (data) => {
 export const patchKeyword = async (data) => {
   return await http.patch(`/api/v2/scanner/keywords`, data);
 };
+
+export const updateKeywordStatus = async (data) => {
+  return await http
+    .put(`/api/v2/scanner/keyword-status?id=${data.id}`)
+    .then((res) => {
+      return res;
+    });
+};
