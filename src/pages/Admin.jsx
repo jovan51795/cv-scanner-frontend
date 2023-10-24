@@ -1,9 +1,12 @@
-import React, { useState, useEffect } from "react";
+import { Button, TextField } from "@mui/material";
+import { Box, Container, Stack } from "@mui/system";
+import { DataGrid } from "@mui/x-data-grid";
+import React, { useEffect, useState } from "react";
+import LoadingCircle from '../components/LoadingCircle.jsx';
+import Navbar from "../components/Navbar.jsx";
 import { env } from "../env";
 import { getAllKeywords } from "../services/cv_tagging";
 import { http } from "../services/http";
-import { Button, TextField, Card, CardContent } from "@mui/material";
-import { DataGrid } from "@mui/x-data-grid";
 
 const Admin = () => {
   const [keyWord, setKeyWord] = useState("");
@@ -44,8 +47,9 @@ const Admin = () => {
     {
       field: "id",
       headerName: "Keyword ID",
-      width: 150,
+      width: 200,
       headerAlign: "center",
+      align: "center",
     },
     {
       field: "keyword",
@@ -56,31 +60,55 @@ const Admin = () => {
   ];
 
   return (
-    <div className="admin">
-      <form onSubmit={handleSubmit} style={{ marginBottom: "20px" }}>
-        <TextField
-          name="keyWords"
-          size="small"
-          placeholder="Create a new keyword"
-          value={keyWord}
-          onChange={(e) => setKeyWord(e.target.value)}
-        />
-        <Button type="submit" variant="contained">
-          Send
-        </Button>
-      </form>
-      <div style={{ marginTop: "20px" }}>
+    <>
+      <Navbar />
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "row",
+          p: 1,
+          m: 1,
+          bgcolor: "background.paper",
+          borderRadius: 1,
+        }}
+        justifyContent="center"
+      >
+        <form onSubmit={handleSubmit}>
+          <Stack direction="row" spacing={1}>
+            <TextField
+              name="keyWords"
+              label="Create a new keyword"
+              variant="outlined"
+              value={keyWord}
+              onChange={(e) => setKeyWord(e.target.value)}
+              size="small"
+            />
+            <Button type="submit" variant="contained">
+              Submit
+            </Button>
+          </Stack>
+        </form>
+      </Box>
+      <Container
+        sx={{
+          width: "60%",
+          maxWidth: "100%",
+          "@media (max-width:600px)": {
+            width: "100%",
+          },
+        }}
+      >
         {loading ? (
-          <img src="https://i.gifer.com/YCZH.gif" alt="Loading" />
+          <LoadingCircle/>
         ) : words.length === 0 ? (
           showNoData ? (
             "No Data"
           ) : null
         ) : (
-          <DataGrid rows={words} columns={columns} pageSize={5} />
+          <DataGrid rows={words} columns={columns} pageSize={25}/>
         )}
-      </div>
-    </div>
+      </Container>
+    </>
   );
 };
 
