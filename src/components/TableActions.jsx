@@ -1,14 +1,38 @@
-import React from "react";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import EditIcon from "@mui/icons-material/Edit";
-import IconButton from "@mui/material/IconButton";
-import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 import VisibilityIcon from "@mui/icons-material/Visibility";
+import { Switch } from "@mui/material";
+import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
-import { deleteKeyword, patchKeyword } from "../services/cv_tagging";
+import React from "react";
 import Swal from "sweetalert2";
+import {
+  deleteKeyword,
+  patchKeyword,
+  updateKeywordStatus,
+} from "../services/cv_tagging";
 
 const TableActions = (param) => {
+  const updateKeyStatus = () => {
+    Swal.fire({
+      title: "Update Keyword Status?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Continue",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const data = {
+          id: param.row.id,
+        };
+        updateKeywordStatus(data).then(() => {
+          window.location.reload();
+        });
+      }
+    });
+  };
+
   const deleteKey = () => {
     deleteKeyword(param.row).then((res) => {
       Swal.fire({
@@ -71,10 +95,15 @@ const TableActions = (param) => {
         </IconButton>
       </Tooltip>
 
-      <Tooltip title="Deactivate" placement="top-start">
-        <IconButton>
-          <HighlightOffIcon color="warning" />
-        </IconButton>
+      <Tooltip
+        title={param.row.status === "active" ? "Deactivate" : "Activate"}
+        placement="top-start"
+      >
+        <Switch
+          checked={param.row.status === "active"}
+          onChange={updateKeyStatus}
+          color="success"
+        />
       </Tooltip>
 
       <Tooltip title="Edit" placement="top-start">
