@@ -1,19 +1,21 @@
-import { Button, TextField } from "@mui/material";
-import { Box, Container, Stack } from "@mui/system";
-import { DataGrid } from "@mui/x-data-grid";
-import React, { useEffect, useState } from "react";
-import LoadingCircle from '../components/LoadingCircle.jsx';
-import Navbar from "../components/Navbar.jsx";
+import React, { useState, useEffect } from "react";
 import { env } from "../env";
 import { getAllKeywords } from "../services/cv_tagging";
 import { http } from "../services/http";
 import TableActions from "../components/TableActions.jsx";
+import { Box, Button, Container, Stack, TextField } from "@mui/material";
+import { DataGrid } from "@mui/x-data-grid";
+import { KeyboardArrowLeft, KeyboardArrowRight } from "@mui/icons-material";
+import Navbar from "../components/Navbar";
+import LoadingCircle from "../components/LoadingCircle";
 
 const Admin = () => {
   const [keyWord, setKeyWord] = useState("");
   const [words, setWords] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showNoData, setShowNoData] = useState(false);
+  const [page, setPage] = useState(0);
+  const [pageSize, setPageSize] = useState(10);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -28,7 +30,7 @@ const Admin = () => {
   };
 
   const getKeyWords = async () => {
-    getAllKeywords().then((res) => {
+    getAllKeywords(page, pageSize).then((res) => {
       console.log(res.data);
       setWords(res.data);
       setLoading(false);
@@ -41,8 +43,28 @@ const Admin = () => {
       if (words.length === 0) {
         setShowNoData(true);
       }
-    }, 10000); // 10 seconds
-  }, []);
+    }, 10000);
+  }, [page, pageSize]);
+  const increasePage = () => {
+    setPage((prevPage) => prevPage + 1);
+    console.log(page);
+    getKeyWords();
+  };
+
+  const decreasePage = () => {
+    if (page > 0) {
+      setPage((prevPage) => prevPage - 1);
+      console.log(page);
+      getKeyWords();
+    }
+  };
+
+  const handlePageSizeChange = (event) => {
+    const newPageSize = parseInt(event.target.value);
+    if (!isNaN(newPageSize) && newPageSize > 0) {
+      setPageSize(newPageSize);
+    }
+  };
 
   const columns = [
     {
@@ -116,12 +138,39 @@ const Admin = () => {
             "No Data"
           ) : null
         ) : (
-          <DataGrid
-            rows={words}
-            columns={columns}
-            pageSize={25}
-            disableExtendRowFullWidth
-          />
+          <>
+            <DataGrid rows={words} columns={columns} pageSize={5} hideFooter disableExtendRowFullWidth/>
+            <div
+              style={{
+                marginTop: "20px",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <div style={{ marginRight: "10px" }}>
+                <label>Page Size:</label>
+                <TextField
+                  type="number"
+                  value={pageSize}
+                  onChange={handlePageSizeChange}
+                  size="small"
+                />
+              </div>
+              <div>
+                <Button
+                  onClick={decreasePage}
+                  variant="outlined"
+                  disabled={page === 0}
+                >
+                  <KeyboardArrowLeft />
+                </Button>
+                <Button onClick={increasePage} variant="outlined">
+                  <KeyboardArrowRight />
+                </Button>
+              </div>
+            </div>
+          </>
         )}
       </Container>
     </>
