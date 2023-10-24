@@ -13,7 +13,7 @@ const TableActions = (param) => {
     deleteKeyword(param.row).then((res) => {
       Swal.fire({
         title: "Delete Keyword?",
-        text: "This keyword will permanently deleted!",
+        text: "This keyword will be permanently deleted!",
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#d33",
