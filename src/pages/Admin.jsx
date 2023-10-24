@@ -105,7 +105,6 @@ const Admin = () => {
 
   return (
     <>
-      <Navbar />
       <Box
         sx={{
           display: "flex",
