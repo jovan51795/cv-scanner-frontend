@@ -7,6 +7,7 @@ import Navbar from "../components/Navbar.jsx";
 import { env } from "../env";
 import { getAllKeywords } from "../services/cv_tagging";
 import { http } from "../services/http";
+import TableActions from "../components/TableActions.jsx";
 
 const Admin = () => {
   const [keyWord, setKeyWord] = useState("");
@@ -47,15 +48,25 @@ const Admin = () => {
     {
       field: "id",
       headerName: "Keyword ID",
-      width: 200,
       headerAlign: "center",
       align: "center",
+      flex: 1,
     },
     {
       field: "keyword",
       headerName: "Keyword",
-      width: 400,
+      flex: 1,
+      align: "center",
       headerAlign: "center",
+    },
+    {
+      field: "action",
+      sortable: false,
+      headerName: "Actions",
+      flex: 1,
+      headerAlign: "center",
+      align: "center",
+      renderCell: TableActions,
     },
   ];
 
@@ -99,13 +110,18 @@ const Admin = () => {
         }}
       >
         {loading ? (
-          <LoadingCircle/>
+          <LoadingCircle />
         ) : words.length === 0 ? (
           showNoData ? (
             "No Data"
           ) : null
         ) : (
-          <DataGrid rows={words} columns={columns} pageSize={25}/>
+          <DataGrid
+            rows={words}
+            columns={columns}
+            pageSize={25}
+            disableExtendRowFullWidth
+          />
         )}
       </Container>
     </>
