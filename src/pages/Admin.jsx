@@ -166,7 +166,7 @@ const Admin = () => {
               }}
             >
               <div style={{ marginRight: "10px" }}>
-                <label>Page Size:</label>
+                <label variant="contained">Page Size:</label>
                 <TextField
                   type="number"
                   value={pageSize}
