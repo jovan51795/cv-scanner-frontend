@@ -85,6 +85,7 @@ const Admin = () => {
       headerName: "Status",
       headerAlign: "center",
       align: "center",
+      width: 400,
       flex: 1,
       renderCell: KeywordStatus,
     },
@@ -92,7 +93,10 @@ const Admin = () => {
       field: "action",
       sortable: false,
       headerName: "Actions",
+      headerClassName: "header-cell",
+      cellClassName: "action-cell",
       flex: 1,
+
       headerAlign: "center",
       align: "center",
       renderCell: TableActions,

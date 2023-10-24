@@ -2,6 +2,8 @@ import React from "react";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import EditIcon from "@mui/icons-material/Edit";
 import IconButton from "@mui/material/IconButton";
+import HighlightOffIcon from "@mui/icons-material/HighlightOff";
+import VisibilityIcon from "@mui/icons-material/Visibility";
 import Tooltip from "@mui/material/Tooltip";
 import { deleteKeyword, patchKeyword } from "../services/cv_tagging";
 import Swal from "sweetalert2";
@@ -53,6 +55,14 @@ const TableActions = (param) => {
       }
     });
   };
+
+  const viewKeyword = () => {
+    Swal.fire({
+      title: param.row.keyword,
+      cancelButtonText: "Close",
+      cancelButtonColor: "#d33",
+    });
+  };
   return (
     <div>
       <Tooltip title="Delete" placement="top-start">
@@ -61,12 +71,22 @@ const TableActions = (param) => {
         </IconButton>
       </Tooltip>
 
-      <Tooltip title="Edit" placement="top-start">
+      <Tooltip title="Deactivate" placement="top-start">
         <IconButton onClick={updateKey}>
-          <EditIcon color="success" />
+          <HighlightOffIcon color="warning" />
         </IconButton>
       </Tooltip>
 
+      <Tooltip title="Edit" placement="top-start">
+        <IconButton>
+          <EditIcon color="success" />
+        </IconButton>
+      </Tooltip>
+      <Tooltip title="View" placement="top-start" className="view">
+        <IconButton onClick={viewKeyword}>
+          <VisibilityIcon color="primary" />
+        </IconButton>
+      </Tooltip>
       {/* <Button onClick={buttonClicked} variant="outlined" startIcon={<DeleteForeverIcon/>}></Button>
       <Button onClick={buttonClicked} variant="outlined" startIcon={<EditIcon/>}></Button> */}
     </div>
