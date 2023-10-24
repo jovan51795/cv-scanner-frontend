@@ -4,7 +4,13 @@ import { getAllKeywords } from "../services/cv_tagging";
 import { http } from "../services/http";
 import { Button, TextField } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
-import { KeyboardArrowLeft, KeyboardArrowRight } from "@mui/icons-material";
+import Swal from "sweetalert2";
+import {
+  KeyboardArrowLeft,
+  KeyboardArrowRight,
+  Delete,
+  Edit,
+} from "@mui/icons-material";
 
 const Admin = () => {
   const [keyWord, setKeyWord] = useState("");
@@ -81,6 +87,77 @@ const Admin = () => {
       headerName: "Actions",
       width: 400,
       headerAlign: "center",
+      renderCell: (params) => {
+        const handleEditClick = () => {
+          Swal.fire({
+            title: "Edit Keyword",
+            html: `
+              <input type="text" id="editInput" class="swal2-input" placeholder="Keyword">
+            `,
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "primary",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, edit it!",
+          }).then((result) => {
+            const inputText = document.getElementById("editInput").value;
+
+            if (result.isConfirmed) {
+              http
+                .patch(
+                  `${env.baseURL}/api/v2/scanner/keywords?id=${params.row.id}&keyword=${inputText}`
+                )
+                .then((res) => {
+                  console.log(res.data.message);
+                  window.location.reload();
+                });
+            }
+          });
+        };
+
+        const handleDeleteClick = () => {
+          Swal.fire({
+            title: "Delete Keyword?",
+            text: "Are you sure you want to delete this keyword?",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#d33",
+            cancelButtonColor: "#3085d6",
+            confirmButtonText: "Yes, delete it!",
+          }).then((result) => {
+            if (result.isConfirmed) {
+              http
+                .delete(
+                  `${env.baseURL}/api/v2/scanner/keywords?id=${params.row.id}`
+                )
+                .then((res) => {
+                  window.location.reload();
+                });
+            }
+          });
+        };
+
+        return (
+          <div>
+            <Button
+              color="warning"
+              variant="outlined"
+              style={{ marginRight: "10px" }}
+              onClick={handleEditClick}
+            >
+              <Edit />
+            </Button>
+            <Button
+              color="error"
+              variant="outlined"
+              style={{ marginRight: "10px" }}
+              onClick={handleDeleteClick}
+            >
+              <Delete />
+            </Button>
+          </div>
+        );
+      },
     },
   ];
 
