@@ -83,13 +83,13 @@ const Admin = () => {
     {
       field: "keyword",
       headerName: "Keyword",
-      width: 400,
+      width: 300,
       headerAlign: "center",
     },
     {
       field: "action",
       headerName: "Actions",
-      width: 400,
+      width: 200,
       headerAlign: "center",
       renderCell: (params) => {
         const handleEditClick = () => {
@@ -222,7 +222,7 @@ const Admin = () => {
               }}
             >
               <div style={{ marginRight: "10px" }}>
-                <label>Page Size:</label>
+                <label variant="contained">Page Size:</label>
                 <TextField
                   type="number"
                   value={pageSize}
