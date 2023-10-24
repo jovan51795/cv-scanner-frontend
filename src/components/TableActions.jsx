@@ -72,13 +72,13 @@ const TableActions = (param) => {
       </Tooltip>
 
       <Tooltip title="Deactivate" placement="top-start">
-        <IconButton onClick={updateKey}>
+        <IconButton>
           <HighlightOffIcon color="warning" />
         </IconButton>
       </Tooltip>
 
       <Tooltip title="Edit" placement="top-start">
-        <IconButton>
+        <IconButton onClick={updateKey}>
           <EditIcon color="success" />
         </IconButton>
       </Tooltip>
