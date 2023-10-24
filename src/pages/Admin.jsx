@@ -67,8 +67,9 @@ const Admin = () => {
     {
       field: "id",
       headerName: "Keyword ID",
-      width: 150,
+      width: 200,
       headerAlign: "center",
+      align: "center",
     },
     {
       field: "keyword",
@@ -85,22 +86,46 @@ const Admin = () => {
   ];
 
   return (
-    <div className="admin">
-      <form onSubmit={handleSubmit} style={{ marginBottom: "20px" }}>
-        <TextField
-          name="keyWords"
-          size="small"
-          placeholder="Create a new keyword"
-          value={keyWord}
-          onChange={(e) => setKeyWord(e.target.value)}
-        />
-        <Button type="submit" variant="contained">
-          Send
-        </Button>
-      </form>
-      <div style={{ marginTop: "20px" }}>
+    <>
+      <Navbar />
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "row",
+          p: 1,
+          m: 1,
+          bgcolor: "background.paper",
+          borderRadius: 1,
+        }}
+        justifyContent="center"
+      >
+        <form onSubmit={handleSubmit}>
+          <Stack direction="row" spacing={1}>
+            <TextField
+              name="keyWords"
+              label="Create a new keyword"
+              variant="outlined"
+              value={keyWord}
+              onChange={(e) => setKeyWord(e.target.value)}
+              size="small"
+            />
+            <Button type="submit" variant="contained">
+              Submit
+            </Button>
+          </Stack>
+        </form>
+      </Box>
+      <Container
+        sx={{
+          width: "60%",
+          maxWidth: "100%",
+          "@media (max-width:600px)": {
+            width: "100%",
+          },
+        }}
+      >
         {loading ? (
-          <img src="https://i.gifer.com/YCZH.gif" alt="Loading" />
+          <LoadingCircle/>
         ) : words.length === 0 ? (
           showNoData ? (
             "No Data"
@@ -140,8 +165,8 @@ const Admin = () => {
             </div>
           </>
         )}
-      </div>
-    </div>
+      </Container>
+    </>
   );
 };
 
