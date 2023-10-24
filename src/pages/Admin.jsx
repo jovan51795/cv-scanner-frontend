@@ -2,9 +2,11 @@ import React, { useState, useEffect } from "react";
 import { env } from "../env";
 import { getAllKeywords } from "../services/cv_tagging";
 import { http } from "../services/http";
-import { Button, TextField } from "@mui/material";
+import { Box, Button, Container, Stack, TextField } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { KeyboardArrowLeft, KeyboardArrowRight } from "@mui/icons-material";
+import Navbar from "../components/Navbar";
+import LoadingCircle from "../components/LoadingCircle";
 
 const Admin = () => {
   const [keyWord, setKeyWord] = useState("");
