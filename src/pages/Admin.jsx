@@ -86,6 +86,8 @@ const Admin = () => {
     } catch (error) {
       console.error("Error searching for keywords:", error);
       setWords([]);
+    }finally {
+      setSearch("")
     }
     setLoading(false);
   };
