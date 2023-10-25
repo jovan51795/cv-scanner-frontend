@@ -66,8 +66,13 @@ const TableActions = (param) => {
       confirmButtonText: "Yes, edit it!",
     }).then((result) => {
       const inputText = document.getElementById("editInput").value;
+      
 
       if (result.isConfirmed) {
+        if (inputText === "") {
+          alert("Keyword is empty");
+          return;
+        }
         const data = {
           id: param.row.id,
           keyword: inputText,

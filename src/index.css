@@ -29,4 +29,20 @@ code {
   .view {
     display: inline !important;
   }
+
+  .modal-wrapper {
+    width: 80% !important;
+  }
+
+  .form-wrapper {
+    flex-direction: column !important;
+    
+  }
+
+  .form-wrapper button {
+    margin-top: 1rem !important;
+    margin-left: 0 !important;
+  }
+
+  
  }

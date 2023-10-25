@@ -3,12 +3,37 @@ import { env } from "../env";
 import { getAllKeywords } from "../services/cv_tagging";
 import { http } from "../services/http";
 import TableActions from "../components/TableActions.jsx";
-import { Box, Button, Container, Stack, TextField } from "@mui/material";
+import InputAdornment from "@mui/material/InputAdornment";
+import {
+  Box,
+  Button,
+  Container,
+  FormControl,
+  IconButton,
+  Stack,
+  TextField,
+  Tooltip,
+} from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { KeyboardArrowLeft, KeyboardArrowRight } from "@mui/icons-material";
-import Navbar from "../components/Navbar";
 import LoadingCircle from "../components/LoadingCircle";
 import KeywordStatus from "../components/KeywordStatus";
+import SearchIcon from "@mui/icons-material/Search";
+import AddIcon from "@mui/icons-material/Add";
+import Modal from "@mui/material/Modal";
+import Typography from "@mui/material/Typography";
+
+const style = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 400,
+  bgcolor: "background.paper",
+  border: "2px solid #000",
+  boxShadow: 24,
+  p: 4,
+};
 
 const Admin = () => {
   const [keyWord, setKeyWord] = useState("");
@@ -17,14 +42,21 @@ const Admin = () => {
   const [showNoData, setShowNoData] = useState(false);
   const [page, setPage] = useState(0);
   const [pageSize, setPageSize] = useState(10);
+  const [open, setOpen] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (keyWord === "") {
+      alert("Keyword is required");
+      return;
+    }
+
     const data = {
       keyword: keyWord,
     };
     http.post(`${env.baseURL}/api/v2/scanner/add-keyword`, data).then((res) => {
       if (res.data) {
+        setOpen(false);
         getKeyWords();
       }
     });
@@ -96,7 +128,6 @@ const Admin = () => {
       headerClassName: "header-cell",
       cellClassName: "action-cell",
       flex: 1,
-
       headerAlign: "center",
       align: "center",
       renderCell: TableActions,
@@ -115,23 +146,7 @@ const Admin = () => {
           borderRadius: 1,
         }}
         justifyContent="center"
-      >
-        <form onSubmit={handleSubmit}>
-          <Stack direction="row" spacing={1}>
-            <TextField
-              name="keyWords"
-              label="Create a new keyword"
-              variant="outlined"
-              value={keyWord}
-              onChange={(e) => setKeyWord(e.target.value)}
-              size="small"
-            />
-            <Button type="submit" variant="contained">
-              Submit
-            </Button>
-          </Stack>
-        </form>
-      </Box>
+      ></Box>
       <Container
         sx={{
           width: "60%",
@@ -149,12 +164,77 @@ const Admin = () => {
           ) : null
         ) : (
           <>
+            <Stack direction="row" sx={{ marginBottom: "1rem" }} spacing={1}>
+              <FormControl sx={{ width: "100%" }}>
+                <TextField
+                  size="small"
+                  placeholder="Search"
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position="end" S>
+                        <Tooltip title="Search">
+                          <IconButton>
+                            <SearchIcon />
+                          </IconButton>
+                        </Tooltip>
+                      </InputAdornment>
+                    ),
+                  }}
+                />
+              </FormControl>
+              <Button type="submit" variant="contained">
+                Search
+              </Button>
+              <Button
+                type="submit"
+                variant="contained"
+                onClick={() => setOpen(true)}
+              >
+                <AddIcon />
+                Add
+              </Button>
+              <Modal
+                open={open}
+                onClose={() => setOpen(false)}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+              >
+                <Box sx={style} className="modal-wrapper">
+                  <Typography
+                    sx={{ color: "#fff", marginBottom: "1rem" }}
+                    id="modal-modal-title"
+                    variant="h6"
+                    component="h2"
+                  >
+                    Add new keyword
+                  </Typography>
+                  <form onSubmit={handleSubmit}>
+                    <Stack direction="row" spacing={1} className="form-wrapper">
+                      <TextField
+                        sx={{ width: "100%" }}
+                        name="keyWords"
+                        label="Create a new keyword"
+                        variant="outlined"
+                        value={keyWord}
+                        onChange={(e) => setKeyWord(e.target.value)}
+                        size="small"
+                      />
+                      <Button type="submit" variant="contained">
+                        Submit
+                      </Button>
+                    </Stack>
+                  </form>
+                </Box>
+              </Modal>
+            </Stack>
+
             <DataGrid
               rows={words}
               columns={columns}
               pageSize={5}
               hideFooter
               disableExtendRowFullWidth
+              sx={{ overflow: "auto" }}
             />
             <div
               style={{
