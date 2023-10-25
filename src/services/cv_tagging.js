@@ -8,6 +8,15 @@ export const getAllKeywords = async (page, pageSize) => {
     });
 };
 
+export const searchKeywords = async (keyword) => {
+  console.log(keyword);
+  return await http
+    .get(`/api/v2/scanner/search?keyword=${keyword}`)
+    .then((res) => {
+      return res;
+    });
+};
+
 export const deleteKeyword = async (data) => {
   console.log(data);
   return await http

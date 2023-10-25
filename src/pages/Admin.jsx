@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { env } from "../env";
-import { getAllKeywords } from "../services/cv_tagging";
+import { getAllKeywords, searchKeywords } from "../services/cv_tagging";
 import { http } from "../services/http";
 import TableActions from "../components/TableActions.jsx";
 import InputAdornment from "@mui/material/InputAdornment";
@@ -37,6 +37,7 @@ const style = {
 
 const Admin = () => {
   const [keyWord, setKeyWord] = useState("");
+  const [search, setSearch] = useState("");
   const [words, setWords] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showNoData, setShowNoData] = useState(false);
@@ -67,6 +68,25 @@ const Admin = () => {
       setWords(res.data);
       setLoading(false);
     });
+  };
+
+  const handleSearch = async () => {
+    setLoading(true);
+    setShowNoData(false);
+    try {
+      const response = await searchKeywords(search);
+      if (response.data) {
+        setWords(response.data);
+      } else {
+        setWords([]);
+        setShowNoData(true);
+      }
+    } catch (error) {
+      console.error("Error searching for keywords:", error);
+      setWords([]);
+      setShowNoData(true);
+    }
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -160,7 +180,9 @@ const Admin = () => {
           <LoadingCircle />
         ) : words.length === 0 ? (
           showNoData ? (
-            "No Data"
+            <Typography variant="h1" component="h2">
+              No Data
+            </Typography>
           ) : null
         ) : (
           <>
@@ -169,20 +191,27 @@ const Admin = () => {
                 <TextField
                   size="small"
                   placeholder="Search"
+                  onChange={(e) => setSearch(e.target.value)}
                   InputProps={{
                     endAdornment: (
                       <InputAdornment position="end" S>
                         <Tooltip title="Search">
-                          <IconButton>
+                          <IconButton onClick={handleSearch}>
                             <SearchIcon />
                           </IconButton>
                         </Tooltip>
                       </InputAdornment>
                     ),
                   }}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") {
+                      e.preventDefault();
+                      handleSearch();
+                    }
+                  }}
                 />
               </FormControl>
-              <Button type="submit" variant="contained">
+              <Button type="submit" variant="contained" onClick={handleSearch}>
                 Search
               </Button>
               <Button
@@ -245,8 +274,8 @@ const Admin = () => {
               }}
             >
               <div style={{ marginRight: "10px" }}>
-                <label variant="contained">Page Size:</label>
                 <TextField
+                  label="Page Size:"
                   type="number"
                   value={pageSize}
                   onChange={handlePageSizeChange}
