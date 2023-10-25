@@ -71,6 +71,10 @@ const Admin = () => {
   };
 
   const handleSearch = async () => {
+    if (search === "") {
+      getKeyWords();
+      return;
+    }
     setLoading(true);
     setShowNoData(false);
     try {

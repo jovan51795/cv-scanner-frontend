@@ -1,11 +1,17 @@
-import React, { useState } from "react";
-import { login } from "../services/keycloak";
+import React, { useState, useEffect } from "react";
+import { getToken, login } from "../services/keycloak";
 import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const navigate = useNavigate();
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
+
+  useEffect(() => {
+    if (getToken()) {
+      navigate("/admin");
+    }
+  }, []);
 
   const submit = (e) => {
     const data = new URLSearchParams();
@@ -23,7 +29,6 @@ const Login = () => {
             sessionStorage.setItem("cv_tagging", JSON.stringify(res.data));
             navigate("/admin");
           }
-          
         })
         .catch((error) => {
           if (error && error.response.status === 401) {
