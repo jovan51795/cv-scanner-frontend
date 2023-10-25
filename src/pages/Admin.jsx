@@ -255,7 +255,10 @@ const Admin = () => {
               pageSize={5}
               hideFooter
               disableExtendRowFullWidth
-              sx={{ overflow: "auto", height: 600 }}
+              sx={{
+                overflow: "auto",
+                height: words.length > 0 ? "unset" : 200,
+              }}
               slots={{
                 noRowsOverlay: CustomNoRowsOverlay,
               }}
@@ -277,7 +280,7 @@ const Admin = () => {
                   size="small"
                 />
               </div>
-              <div>
+              <div style={{ display: "flex", flexDirection: "row", gap: 4 }}>
                 <Button
                   onClick={decreasePage}
                   variant="outlined"
