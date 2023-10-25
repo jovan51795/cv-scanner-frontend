@@ -1,7 +1,9 @@
 import { keyCloakHttp } from "./http";
 
 export const login = async (cred) => {
-  return await keyCloakHttp.post("/token", cred);
+  return await keyCloakHttp.post("/token", cred).then((res) => {
+    return res;
+  });
 };
 
 export const logout = () => {
