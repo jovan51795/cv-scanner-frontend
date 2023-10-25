@@ -23,9 +23,23 @@ code {
   display: none !important;
 }
 
+.admin-wrapper {
+  width: 60% !important;
+}
+
+@media (max-width: 936px) {
+  .admin-wrapper {
+    width: 80% !important;
+  }
+}
+
 @media (max-width: 768px) {
+  .admin-wrapper {
+    width: 100% !important;
+  }
+  
   .header-cell, .action-cell {
-    min-width: 160px !important;
+    min-width: 200px !important;
   }
   .view {
     display: inline !important;
@@ -44,6 +58,18 @@ code {
     margin-top: 1rem !important;
     margin-left: 0 !important;
   }
+  /* .MuiDataGrid-main {
+    width: 400px;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  } */
 
   
  }
+
+ @media screen and (max-width: 578px) {
+    .MuiDataGrid-main {
+    width: 550px;
+  }
+} 
+

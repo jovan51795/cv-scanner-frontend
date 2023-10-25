@@ -165,15 +165,7 @@ const Admin = () => {
         }}
         justifyContent="center"
       ></Box>
-      <Container
-        sx={{
-          width: "60%",
-          maxWidth: "100%",
-          "@media (max-width:600px)": {
-            width: "100%",
-          },
-        }}
-      >
+      <Container className="admin-wrapper">
         {loading ? (
           <LoadingCircle />
         ) : (
@@ -186,7 +178,7 @@ const Admin = () => {
                   onChange={(e) => setSearch(e.target.value)}
                   InputProps={{
                     endAdornment: (
-                      <InputAdornment position="end" S>
+                      <InputAdornment position="end">
                         <Tooltip title="Search">
                           <IconButton onClick={handleSearch}>
                             <SearchIcon />
@@ -256,7 +248,7 @@ const Admin = () => {
               hideFooter
               disableExtendRowFullWidth
               sx={{
-                overflow: "auto",
+                overflowX: "scroll",
                 height: words.length > 0 ? "unset" : 200,
               }}
               slots={{
