@@ -27,7 +27,7 @@ const Login = () => {
         .then((res) => {
           if (res.data) {
             sessionStorage.setItem("cv_tagging", JSON.stringify(res.data));
-            navigate("/admin");
+            window.location.href = "/admin";
           }
         })
         .catch((error) => {
