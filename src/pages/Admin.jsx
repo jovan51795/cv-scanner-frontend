@@ -22,6 +22,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import AddIcon from "@mui/icons-material/Add";
 import Modal from "@mui/material/Modal";
 import Typography from "@mui/material/Typography";
+import CustomNoRowsOverlay from "../components/Overlays/StyledGridOverlay";
 
 const style = {
   position: "absolute",
@@ -40,7 +41,6 @@ const Admin = () => {
   const [search, setSearch] = useState("");
   const [words, setWords] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [showNoData, setShowNoData] = useState(false);
   const [page, setPage] = useState(0);
   const [pageSize, setPageSize] = useState(10);
   const [open, setOpen] = useState(false);
@@ -72,30 +72,22 @@ const Admin = () => {
 
   const handleSearch = async () => {
     setLoading(true);
-    setShowNoData(false);
     try {
       const response = await searchKeywords(search);
       if (response.data) {
         setWords(response.data);
       } else {
         setWords([]);
-        setShowNoData(true);
       }
     } catch (error) {
       console.error("Error searching for keywords:", error);
       setWords([]);
-      setShowNoData(true);
     }
     setLoading(false);
   };
 
   useEffect(() => {
     getKeyWords();
-    setTimeout(() => {
-      if (words.length === 0) {
-        setShowNoData(true);
-      }
-    }, 10000);
   }, [page, pageSize]);
   const increasePage = () => {
     setPage((prevPage) => prevPage + 1);
@@ -178,12 +170,6 @@ const Admin = () => {
       >
         {loading ? (
           <LoadingCircle />
-        ) : words.length === 0 ? (
-          showNoData ? (
-            <Typography variant="h1" component="h2">
-              No Data
-            </Typography>
-          ) : null
         ) : (
           <>
             <Stack direction="row" sx={{ marginBottom: "1rem" }} spacing={1}>
@@ -263,7 +249,10 @@ const Admin = () => {
               pageSize={5}
               hideFooter
               disableExtendRowFullWidth
-              sx={{ overflow: "auto" }}
+              sx={{ overflow: "auto", height: 600 }}
+              slots={{
+                noRowsOverlay: CustomNoRowsOverlay,
+              }}
             />
             <div
               style={{
