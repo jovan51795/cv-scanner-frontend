@@ -1,12 +1,11 @@
+import { IconButton } from "@mui/material";
 import AppBar from "@mui/material/AppBar";
 import Button from "@mui/material/Button";
 import Toolbar from "@mui/material/Toolbar";
-import { IconButton } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import * as React from "react";
 import { useNavigate } from "react-router-dom";
 import LogoLight from "../logo-light.png";
-import LogoDark from "../logo-dark.png";
 import { logout } from "../services/keycloak";
 
 const Navbar = () => {
