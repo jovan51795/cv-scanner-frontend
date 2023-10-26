@@ -78,7 +78,6 @@ const TableActions = (param) => {
           keyword: inputText,
         };
         patchKeyword(data).then((res) => {
-          console.log(res.data.message);
           window.location.reload();
         });
       }

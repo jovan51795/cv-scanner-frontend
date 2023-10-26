@@ -9,7 +9,6 @@ export const getAllKeywords = async (page, pageSize) => {
 };
 
 export const searchKeywords = async (keyword) => {
-  console.log(keyword);
   return await http
     .get(`/api/v2/scanner/search?keyword=${keyword}`)
     .then((res) => {
@@ -18,7 +17,6 @@ export const searchKeywords = async (keyword) => {
 };
 
 export const deleteKeyword = async (data) => {
-  console.log(data);
   return await http
     .delete(`/api/v2/scanner/keywords?id=${data.id}`)
     .then((res) => {

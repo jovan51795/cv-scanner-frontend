@@ -13,7 +13,6 @@ const Applicants = () => {
     var fileData1 = new FormData();
     fileData1.append("file", file);
     setFileData(fileData1);
-    console.log(e, "the e");
   };
 
   const handleChange = (e) => {
@@ -27,7 +26,6 @@ const Applicants = () => {
   //http://localhost:8222/api/get-tags
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(data);
     axios
       .post(
         `${env.baseURL}/api/v1/scanner/scan?profile=${encodeURIComponent(
@@ -35,9 +33,7 @@ const Applicants = () => {
         )}`,
         fileData
       )
-      .then((res) => {
-        console.log(res, "the result");
-      })
+      .then((res) => {})
       .catch((error) => {
         console.log(error);
       });
@@ -47,9 +43,7 @@ const Applicants = () => {
     e.preventDefault();
     axios
       .post(`${env.baseURL}/api2/v1/scanner/get-tags/`, fileData)
-      .then((res) => {
-        console.log(res, "the result");
-      })
+      .then((res) => {})
       .catch((error) => {
         console.log(error);
       });

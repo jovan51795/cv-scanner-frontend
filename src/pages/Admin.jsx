@@ -103,7 +103,6 @@ const Admin = () => {
   const decreasePage = () => {
     if (page > 0) {
       setPage((prevPage) => prevPage - 1);
-      console.log(page);
       getKeyWords();
     }
   };
