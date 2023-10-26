@@ -2,7 +2,7 @@ import axios from "axios";
 import { env } from "../env";
 import { getToken } from "./keycloak";
 export const http = axios.create({
-  baseURL: env.baseURL,
+  baseURL: "",
 });
 
 export const keyCloakHttp = axios.create({
