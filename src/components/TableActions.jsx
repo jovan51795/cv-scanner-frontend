@@ -53,11 +53,11 @@ const TableActions = (param) => {
     });
   };
 
-  const updateKey = () => {
+  const updateKey = (keyword) => {
     Swal.fire({
       title: "Edit Keyword",
       html: `
-        <input type="text" id="editInput" class="swal2-input swal2-custom-input" placeholder="Keyword">
+        <input type="text" id="editInput" class="swal2-input swal2-custom-input" value="${keyword}" placeholder="Keyword">
       `,
       icon: "warning",
       showCancelButton: true,
@@ -66,7 +66,6 @@ const TableActions = (param) => {
       confirmButtonText: "Yes, edit it!",
     }).then((result) => {
       const inputText = document.getElementById("editInput").value;
-      
 
       if (result.isConfirmed) {
         if (inputText === "") {
@@ -111,7 +110,7 @@ const TableActions = (param) => {
       </Tooltip>
 
       <Tooltip title="Edit" placement="top-start">
-        <IconButton onClick={updateKey}>
+        <IconButton onClick={() => updateKey(param.row.keyword)}>
           <EditIcon color="success" />
         </IconButton>
       </Tooltip>
