@@ -1,4 +1,10 @@
-import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import {
+  BrowserRouter,
+  HashRouter,
+  Navigate,
+  Route,
+  Routes,
+} from "react-router-dom";
 import Login from "./pages/Login";
 import PrivateRoute from "./pages/PrivateRoute";
 import { getToken } from "./services/keycloak";
@@ -8,7 +14,7 @@ function App() {
   const isAuthenticated = getToken();
   return (
     <CustomTheme>
-      <BrowserRouter>
+      <HashRouter>
         <Routes>
           <Route
             path="*"
@@ -18,7 +24,7 @@ function App() {
           />
           <Route path="/login" element={<Login />} />
         </Routes>
-      </BrowserRouter>
+      </HashRouter>
     </CustomTheme>
   );
 }
