@@ -57,6 +57,9 @@ const Admin = () => {
     };
     http.post(`${env.baseURL}/api/v2/scanner/add-keyword`, data).then((res) => {
       if (res.data) {
+        if (res.data === 1) {
+          alert("Keyword is already added!");
+        }
         setOpen(false);
         getKeyWords();
       }
