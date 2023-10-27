@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { env } from "../env";
 import { getAllKeywords, searchKeywords } from "../services/cv_tagging";
 import { http } from "../services/http";
 import TableActions from "../components/TableActions.jsx";
@@ -55,7 +54,7 @@ const Admin = () => {
     const data = {
       keyword: keyWord,
     };
-    http.post(`${env.baseURL}/api/v2/scanner/add-keyword`, data).then((res) => {
+    http.post(`/api/v2/scanner/add-keyword`, data).then((res) => {
       if (res.data) {
         if (res.data === 1) {
           alert("Keyword is already added!");
@@ -90,8 +89,8 @@ const Admin = () => {
     } catch (error) {
       console.error("Error searching for keywords:", error);
       setWords([]);
-    }finally {
-      setSearch("")
+    } finally {
+      setSearch("");
     }
     setLoading(false);
   };
