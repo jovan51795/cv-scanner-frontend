@@ -27,7 +27,7 @@ const Login = () => {
         .then((res) => {
           if (res.data) {
             sessionStorage.setItem("cv_tagging", JSON.stringify(res.data));
-            window.location.href = "/#/admin";
+            window.location.reload();
           }
         })
         .catch((error) => {
@@ -53,6 +53,7 @@ const Login = () => {
           <div className="group-wrapper">
             <div className="group">
               <input
+                autoComplete="true"
                 required
                 className="input"
                 type="text"
@@ -62,6 +63,7 @@ const Login = () => {
             </div>
             <div className="group">
               <input
+                autoComplete="true"
                 required
                 className="input"
                 type="password"
