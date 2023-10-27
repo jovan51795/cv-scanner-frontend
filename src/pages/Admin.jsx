@@ -60,6 +60,7 @@ const Admin = () => {
         if (res.data === 1) {
           alert("Keyword is already added!");
         }
+        setKeyWord("");
         setOpen(false);
         getKeyWords();
       }
