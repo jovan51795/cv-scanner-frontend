@@ -8,6 +8,7 @@ export const login = async (cred) => {
 
 export const logout = () => {
   sessionStorage.removeItem("cv_tagging");
+  window.location.reload();
 };
 
 export const getToken = () => {
