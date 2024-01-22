@@ -14,16 +14,21 @@ const Login = () => {
   }, []);
 
   const submit = (e) => {
-    const data = new URLSearchParams();
-    data.append("grant_type", "password");
-    data.append("client_id", "cv_scanner");
-    // data.append("username", "cv_scanner_user");
-    // data.append("password", "77-keycloak-pass-dev");
-    data.append("username", username);
-    data.append("password", password);
+    // const data = new URLSearchParams();
+    // data.append("grant_type", "password");
+    // data.append("client_id", "cv_scanner");
+    // // data.append("username", "cv_scanner_user");
+    // // data.append("password", "77-keycloak-pass-dev");
+    // data.append("username", username);
+    // data.append("password", password);
+
+    const userCred = {
+      email: username,
+      password: password,
+    };
     e.preventDefault();
     if (username || password) {
-      login(data)
+      login(userCred)
         .then((res) => {
           if (res.data) {
             sessionStorage.setItem("cv_tagging", JSON.stringify(res.data));

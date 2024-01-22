@@ -1,5 +1,5 @@
 import { Backdrop, CircularProgress } from "@mui/material";
-import { useState } from "react";
+import React, { useState } from "react";
 
 export default function LoadingCircle() {
   const [open, setOpen] = useState(true);

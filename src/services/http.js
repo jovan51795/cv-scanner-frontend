@@ -6,7 +6,7 @@ export const http = axios.create({
 });
 
 export const keyCloakHttp = axios.create({
-  baseURL: env.TOKEN_URL,
+  baseURL: "",
 });
 
 http.interceptors.request.use(
