@@ -28,6 +28,8 @@ http.interceptors.response.use(null, (error) => {
 
   if (!expectedError) {
     alert("An unexpected error occurred");
+    sessionStorage.removeItem("cv_tagging");
+    window.location.href = "/#/login";
   }
   if (error && error.response.status === 401) {
     sessionStorage.removeItem("cv_tagging");
