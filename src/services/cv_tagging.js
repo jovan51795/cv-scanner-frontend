@@ -35,3 +35,30 @@ export const updateKeywordStatus = async (data) => {
       return res;
     });
 };
+
+export const getTags = async (data) => {
+  return await http
+    .post(`/api/v2/scanner/get-tags`, data)
+    .then((res) => {
+      return res;
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};
+
+export const scan = async (username, file) => {
+  return await http
+    .post(
+      `/api/v2/scanner/scan?profile=${encodeURIComponent(
+        JSON.stringify(username)
+      )}`,
+      file
+    )
+    .then((res) => {
+      return res;
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};

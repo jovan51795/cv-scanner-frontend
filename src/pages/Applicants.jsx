@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { env } from "../env";
+import { getTags, scan } from "../services/cv_tagging";
 
 const Applicants = () => {
   const [data, setData] = useState({
@@ -8,9 +9,10 @@ const Applicants = () => {
   });
   const [fileData, setFileData] = useState(null);
 
+  var fileData1 = new FormData();
   const handleFileChange = (e) => {
     let file = e.target.files[0];
-    var fileData1 = new FormData();
+
     fileData1.append("file", file);
     setFileData(fileData1);
   };
@@ -26,27 +28,33 @@ const Applicants = () => {
   //http://localhost:8222/api/get-tags
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios
-      .post(
-        `${env.baseURL}/api/v1/scanner/scan?profile=${encodeURIComponent(
-          JSON.stringify(data)
-        )}`,
-        fileData
-      )
-      .then((res) => {})
-      .catch((error) => {
-        console.log(error);
-      });
+    // axios
+    //   .post(
+    //     `${env.baseURL}/api/v2/scanner/scan?profile=${encodeURIComponent(
+    //       JSON.stringify(data)
+    //     )}`,
+    //     fileData
+    //   )
+    //   .then((res) => {})
+    //   .catch((error) => {
+    //     console.log(error);
+    //   });
+    scan(data, fileData).then((res) => {
+      console.log(res, "this is the result");
+    });
   };
 
   const handleSubmit2 = (e) => {
     e.preventDefault();
-    axios
-      .post(`${env.baseURL}/api2/v1/scanner/get-tags/`, fileData)
-      .then((res) => {})
-      .catch((error) => {
-        console.log(error);
-      });
+    // axios
+    //   .post(`${env.baseURL}/api/v2/scanner/get-tags`, fileData1)
+    //   .then((res) => {})
+    //   .catch((error) => {
+    //     console.log(error);
+    //   });
+    getTags(fileData).then((res) => {
+      console.log(res, "the result");
+    });
   };
 
   return (

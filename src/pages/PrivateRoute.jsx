@@ -3,6 +3,7 @@ import { Route, Routes } from "react-router-dom";
 import Navbar from "../components/Navbar";
 
 const Admin = React.lazy(() => import("./Admin"));
+const Applicants = React.lazy(() => import("./Applicants"));
 
 const PrivateRoute = () => {
   return (
@@ -10,6 +11,7 @@ const PrivateRoute = () => {
       <Navbar />
       <Routes>
         <Route path="/admin" element={<Admin />} />
+        <Route path="/scan" element={<Applicants />} />
       </Routes>
     </>
   );
